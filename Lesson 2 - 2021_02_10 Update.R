@@ -66,6 +66,10 @@ is.logical(x)
 is.vector(x)
 
 
+#Indexing vectors
+myvector <- c(8,2,3,2,3,4,5,6,45,3,2,7)
+myvector[1]
+
 #Matrices
 
 vec1 <- 1:4
@@ -87,6 +91,11 @@ m
 
 y <- matrix(1:12, nrow=3, ncol=4)	# a 3 by 4 matrix
 y
+
+y2 <- matrix(1:12, nrow=3, ncol=4,byrow=TRUE)
+y2
+
+?matrix
 
 # create a 2 x 2 matrix with labels – then fill in matrix 
 cells <- c(1,26,24,68) 
@@ -119,7 +128,14 @@ w[1,c(4,5)]
 z <- matrix(rep(10, 9), 3, 3)
 z
 
+newmat <- matrix(1:2,3,3)
+newmat
+
+
 #Data Frames
+
+ChickWeight
+
 mydata <- data.frame(exam = 1:4, grade = c(85, 90, 89, 97))
 is.data.frame(mydata)
 mydata
@@ -137,11 +153,15 @@ View(sleep)
 
 #write code to access the help files 
 #for sleep.
+?sleep
 
 summary(sleep)
 extra
 sleep$extra
 #write code to print the ID variable.
+sleep$ID
+#Does this work?
+sleep[,3]
 
 attach(sleep)
 extra
@@ -149,11 +169,8 @@ sleep$extra[sleep$ID == 1]
 
 #Write code to print all the values of 
 #extra from treatment group 1 only.
+sleep$extra[sleep$group==1]
 
-
-
-#Write code to summary the variable extra 
-#for treatment group 1 only.
 
 
 
@@ -164,6 +181,16 @@ diff <- extra2-extra1
 t.test(diff)
 #Run the code from the second example in
 #the sleep help file after “prolongations”
+sleep1 <- with(sleep, extra[group == 2] - extra[group == 1])
+summary(sleep1)
+stripchart(sleep1, method = "stack", xlab = "hours",
+           main = "Sleep prolongation (n = 10)")
+boxplot(sleep1, horizontal = TRUE, add = TRUE,
+        at = .6, pars = list(boxwex = 0.5, staplewex = 0.25))
+
+
+
+
 sleep[[1]]
 sleep[1]
 is.vector(sleep[[1]])
