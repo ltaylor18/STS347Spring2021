@@ -1,3 +1,8 @@
+##############
+## Lesson 3 ##
+##2/15/2021 ##
+##############
+
 library(readr)
 twilight <- read_delim("~/STS 347/0_Spring 2021/Notes/Data for Notes/Lesson 3 - Age Data.txt", 
                        "\t", escape_double = FALSE, comment = "!", 
@@ -27,3 +32,7 @@ View(Lesson_3_Temperature_Anomalies)
 library(readr)
 Lesson_3_Temperature_Anomalies <- read_csv("~/STS 347/0_Spring 2021/Notes/Data for Notes/Lesson 3 - Temperature Anomalies.txt", skip = 10)
 View(Lesson_3_Temperature_Anomalies)
+
+##############
+##2/17/2021 ##
+##############
