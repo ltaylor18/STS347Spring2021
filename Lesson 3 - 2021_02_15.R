@@ -36,3 +36,56 @@ View(Lesson_3_Temperature_Anomalies)
 ##############
 ##2/17/2021 ##
 ##############
+
+library(readxl)
+bison <- read_excel("~/STS 347/0_Spring 2021/Notes/Data for Notes/Lesson 3 - bison.xlsx")
+View(bison)
+
+is.data.frame(bison)
+library(tibble)
+is.tibble(bison)
+is_tibble(bison)
+str(bison)
+
+names(bison)
+
+bison$`Northern herd spring calf ratio`
+
+#Lesson 3 - Activity 1
+#1
+library(readxl)
+bridges <- read_excel("~/STS 347/0_Spring 2021/Notes/Data for Notes/Lesson 3 - StatewideBridges.xls")
+View(bridges)
+
+#2
+summary(bridges)
+
+#3
+hist(bridges$YEARBUILT)
+
+#4
+Alamance <- bridges[bridges$COUNTY=="ALAMANCE",]
+#4a
+length(Alamance$COUNTY)
+#4b
+min(Alamance$YEARBUILT)
+#4c
+max(Alamance$YEARBUILT)
+#4d
+table(Alamance$STRUCTURALLYDEFICIENT)
+
+
+summary(Alamance$YEARBUILT)
+?quantile
+
+#There are multiple ways to do many tasks!
+x <- seq(1,10)
+median(x)
+quantile(x,0.5)
+mean(x,trim=0.5)
+
+x <- 1:10
+out <- summary(x)
+out[2]
+quantile(x,.25)
+
