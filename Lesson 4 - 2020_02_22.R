@@ -64,6 +64,7 @@ p + geom_point()
 # Following up on forum questions related to attach
 names(ChickWeight)
 Chick
+ChickWeight$Chick
 attach(ChickWeight)
 Chick
 detach(ChickWeight)
@@ -72,5 +73,70 @@ Chick
 # Also, I am curious about the 157 and 164 for number of sevens
 # and would love to see your different solutions posted in the forums.
 
+##############
+# 2021-02-26 #
+##############
+
+#Example
+library(ggplot2)
+myplot <- ggplot(mtcars,aes(x=wt,y=mpg))
+myplot + geom_point()
+
+#Boxplot
+ggplot(ToothGrowth,aes(x=supp,y=len)) + geom_boxplot()
+
+ggplot(ToothGrowth,aes(x=supp,y=len)) + 
+  geom_boxplot() + 
+  geom_point()
+
+mygraph <- ggplot(ToothGrowth,aes(x=supp,y=len))
+mygraph + geom_boxplot()
+
+mygraph + geom_point()
+mygraph + geom_boxplot() + geom_point()
+
+mygraph +
+  geom_boxplot() +
+  geom_point() +
+  coord_flip()
+
+mygraph +
+  geom_boxplot(fill="green") +
+  geom_point(color="blue") +
+  coord_flip()
+
+#Diamonds in breakout rooms - see Google slides
+ggplot(diamonds,aes(x=price,y=cut)) +
+  geom_boxplot()
 
 
+#mtcars boxplot example:
+ggplot(mtcars,aes(x=mpg,y=cyl)) + 
+  geom_boxplot()
+
+
+ggplot(mtcars,aes(x=mpg,group=cyl)) + 
+  geom_boxplot()
+
+#Histograms
+
+ggplot(diamonds,aes(x=price)) + 
+  geom_histogram()
+
+ggplot(diamonds,aes(x=price)) + 
+  geom_histogram(bins=20)
+
+ggplot(diamonds,aes(x=price)) + 
+  geom_histogram(bins=20,
+                 color="white")
+
+
+ggplot(diamonds,aes(x=price)) + 
+  geom_histogram(bins=20,
+                 color="red")
+
+#We can make it look pretty too!
+ggplot(diamonds,aes(x=price)) + 
+  geom_histogram(bins=20,
+                 color="red",
+                 fill="purple")
