@@ -140,3 +140,32 @@ ggplot(diamonds,aes(x=price)) +
   geom_histogram(bins=20,
                  color="red",
                  fill="purple")
+
+##############
+# 2021-03-01 #
+##############
+
+# See my "just for fun" code!
+
+library(ggplot2)
+ggplot(diamonds,aes(x=cut)) +
+  geom_bar()
+
+ggplot(diamonds,aes(x=cut)) +
+  geom_bar(fill="purple") #turn bars purple
+
+ggplot(diamonds,aes(x=cut,fill=color)) +
+  geom_bar()
+
+Majors <- c("A&S", "Bus", "Comm", "Edu", "Other")
+Count <- c(2894, 2046, 1374, 257, 591)
+Elon <- data.frame(Majors, Count)
+
+ggplot(Elon, aes(x = Majors, y = Count)) +
+  geom_col()
+
+ggplot(Elon, aes(x = Majors, y = Count, fill=Majors)) +
+  geom_col()
+
+ggplot(Elon, aes(x = Majors, y = Count)) +
+  geom_col(aes(fill=Majors))
