@@ -145,11 +145,34 @@ g4 <- ggplot(Orange,aes(x=factor(Tree),y=circumference)) + geom_boxplot()
 g1
 g2
 
-grid.arrange(g1, g2, g3, g4, ncol=2, nrow =2)
+grid.arrange(g1, g2, g3, g4, ncol=2, nrow =2) 
 
-grid.arrange(g2, arrangeGrob(g3, g4, ncol=2), nrow = 2)
+grid.arrange(g2, arrangeGrob(g3, g4, ncol=2), nrow = 2) 
 
-grid.arrange(g1, g2, g3, nrow = 3)
+grid.arrange(g1, g2, g3, nrow = 3) 
 
-grid.arrange(g2, arrangeGrob(g3, g4, nrow=2), nrow = 1)
+grid.arrange(g2, arrangeGrob(g3, g4, nrow=2), nrow = 1) 
 
+###########
+# 3/15/21 #
+###########
+
+View(CO2)
+#Example
+p1 <- ggplot(CO2,aes(x=conc,y=uptake)) + 
+  geom_point() + 
+  facet_grid(Type ~ Treatment)
+
+p2 <- ggplot(CO2,aes(x=Type,y=conc)) +
+  geom_boxplot()
+
+p3 <- ggplot(CO2,aes(x=Treatment,y=uptake)) +
+  geom_boxplot()
+
+grid.arrange(p1,arrangeGrob(p2,p3,nrow=1,ncol=2),nrow=2)
+
+
+#Saving graphs
+ggsave("mygraph.jpg", plot=p1) 
+
+getwd()
