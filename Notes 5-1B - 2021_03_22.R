@@ -45,3 +45,30 @@ t <- (xbar-250)/(s/sqrt(1000))
 
 pt(t,999) #Correct
 pnorm(t)  #Incorrect
+
+
+###########
+# 3/24/21 #
+###########
+
+pt(2.57058,5,lower.tail=FALSE)
+1-pt(2.57058,5,lower.tail=TRUE)
+1-pt(2.57058,5)
+
+?pf
+pf(1.3,12,6)
+1-pf(1.3,12,6)
+
+runif(10) #unif is the abbreviation in R for the Uniform distribution
+?punif
+?pchisq
+?pbeta
+
+qt(.975,12)
+qnorm(.95)
+
+###########
+# 3/26/21 #
+###########
+
+
