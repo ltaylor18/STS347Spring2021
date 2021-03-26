@@ -71,4 +71,36 @@ qnorm(.95)
 # 3/26/21 #
 ###########
 
+# We looked at the code for the CLT applet
+# All work done by students in Breakout Rooms
 
+# Here are sample solutions to the F(3,56) distribution
+
+myf <- rf(10000,3,56)
+
+# F True SD calc!! 
+num <- 2*56*56*(3+56-2)
+denom <- 3*(56-2)^2*(56-4)
+sqrt(num/denom)
+
+library(ggplot2)
+ggplot(NULL,aes(x=myf)) +
+  geom_histogram(aes(y=..density..),
+                 color="white")
+
+mean(myf)
+sd(myf)
+
+mymatrix <- matrix(myf,nrow=1000)
+
+mymeans <- apply(mymatrix,1,mean)
+
+ggplot(NULL,aes(x=mymeans)) +
+  geom_histogram(aes(y=..density..),
+                 color="white")
+
+mean(mymeans)
+sd(mymeans)
+
+truesd <- 0.887
+truesd/sqrt(10)
