@@ -91,8 +91,8 @@ ggplot(NULL,aes(x=myf)) +
 mean(myf)
 sd(myf)
 
+# Samples of size 10
 mymatrix <- matrix(myf,nrow=1000)
-
 mymeans <- apply(mymatrix,1,mean)
 
 ggplot(NULL,aes(x=mymeans)) +
@@ -104,3 +104,29 @@ sd(mymeans)
 
 truesd <- 0.887
 truesd/sqrt(10)
+
+# Samples of size 30
+myf <- rf(30000,3,56)
+mymatrix <- matrix(myf,nrow=1000)
+mymeans <- apply(mymatrix,1,mean)
+
+ggplot(NULL,aes(x=mymeans)) +
+  geom_histogram(aes(y=..density..),
+                 color="white")
+mean(mymeans)
+sd(mymeans)
+truesd <- 0.887
+truesd/sqrt(30)
+
+# Samples of size 2
+myf <- rf(2000,3,56)
+mymatrix <- matrix(myf,nrow=1000)
+mymeans <- apply(mymatrix,1,mean)
+
+ggplot(NULL,aes(x=mymeans)) +
+  geom_histogram(aes(y=..density..),
+                 color="white")
+mean(mymeans)
+sd(mymeans)
+truesd <- 0.887
+truesd/sqrt(2)
