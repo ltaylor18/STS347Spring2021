@@ -130,3 +130,50 @@ mean(mymeans)
 sd(mymeans)
 truesd <- 0.887
 truesd/sqrt(2)
+
+
+# Extensions for Code Chunk #1:
+
+# Calculate a sequence that covers the x-axis shown
+# in increments of 0.01
+myx <- seq(min(myf),max(myf),.01)
+
+# Calculate the probability density curve 
+# at each x value for the distribution you 
+# are investigating (Be sure to use 
+# appropriate parameters in the last blank)
+myy <- df(myx,3,56)
+
+
+# Add the geom_line layer to super-impose
+# the population distribution.
+ggplot(NULL,aes(x=myf)) +
+  geom_histogram(aes(y=..density..),
+                 color="white") +
+  geom_line(aes(x=myx,
+                y=myy),
+            color="red")
+
+# Extensions for Code Chunk #3
+
+# Calculate a sequence that covers the x-axis shown
+# in increments of 0.01
+myx2 <- seq(min(mymeans),max(mymeans),.01)
+
+# Calculate the probability density curve 
+# at each x value for the Normal distribution 
+# with the same mean as the population distribution
+# and the standard deviation based on the Central
+# Limit Theorem (sigma/sqrt(n))
+myy2 <- dnorm(myx2,1.037,truesd/sqrt(10))
+
+
+# Add the geom_line layer to super-impose
+# the population distribution.
+ggplot(NULL,aes(x=mymeans)) +
+  geom_histogram(aes(y=..density..),
+                 color="white") +
+  geom_line(aes(x=myx2,
+                y=myy2),
+            color="red")
+
