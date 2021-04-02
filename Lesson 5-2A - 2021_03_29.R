@@ -114,3 +114,117 @@ apply(ci,1,mean)
 mean(myvalues10)
 mean(myvalues30)
 mean(myvalues100)
+
+
+############
+# 4/2/2021 #
+############
+
+#Let's explore the concept of XX% confidence!
+nsim <- 1000
+n <- 30
+std <- 5
+loc <- 0.95
+
+output <- replicate(nsim,
+                    t.test(rnorm(n,100,std),
+                           mu=100,
+                           alternative="two.sided",
+                           conf.level=loc)$conf.int[1:2])
+# replicate repeatedly generates 30 random data values
+# from a Normal distribution with a mean of 100
+# and calculates the 95% confidence interval
+output
+
+output <- t(output) # t = transpose (flips the object)
+output
+
+check <- output[,1] <= 100 & output[,2] >= 100
+sum(check)/nsim # percent of intervals that contained
+                # the true mean of 100
+
+
+# Creating a graph of level of confidence
+#Let's explore the concept of XX% confidence!
+nsim <- 100
+n <- 30
+std <- 5
+loc <- 0.95
+
+output <- replicate(nsim,
+                    t.test(rnorm(n,100,std),
+                           mu=100,
+                           alternative="two.sided",
+                           conf.level=loc)$conf.int[1:2])
+# replicate repeatedly generates 30 random data values
+# from a Normal distribution with a mean of 100
+# and calculates the 95% confidence interval
+output
+
+output <- t(output) # t = transpose (flips the object)
+output
+
+check <- output[,1] <= 100 & output[,2] >= 100
+sum(check)/nsim # percent of intervals that contained
+# the true mean of 100
+
+library(ggplot2)
+mydata <- data.frame(row=1:length(output[,1]),
+                     point.estimate=apply(output,1,mean),
+                     lower.bound=output[,1],
+                     upper.bound=output[,2],
+                     check=check)
+g <- ggplot(mydata,aes(x=row,
+                       y=point.estimate,
+                       ymin=lower.bound,
+                       ymax=upper.bound)) +  
+  geom_pointrange() + 
+  coord_flip() +
+  geom_hline(yintercept=100) +
+  labs(title=paste("Simulation of",loc*100,"% confidence"),
+       subtitle=paste("Captured:",sum(check),"out of",nsim, "simulations"),
+       x="",
+       y="Confidence Intervals")
+plot(g)
+
+# paired t-tests
+
+t.test(extra~group,paired=TRUE,data=sleep)
+
+library(dplyr)
+sleep.sorted <- arrange(sleep,ID)
+
+#base
+extra1 <- sleep.sorted$extra[sleep.sorted$group == 1]
+#dplyr
+extra2 <- select(filter(sleep.sorted,group==2),extra)
+
+diff <- extra1-extra2
+
+mysleep <- data.frame(extra1,extra2,diff)
+mysleep <- rename(mysleep,extra2=extra,
+                  diff=extra.1)
+
+
+t.test(diff,data=mysleep) # 212 way of calculating
+# the difference yourself!
+
+# What's wrong with my code?
+# I used dplyr to make extra2 and it is not a vector!
+# The arguments of t.test must be vectors!
+t.test(extra1,extra2,paired=TRUE)
+is.vector(extra2)
+
+diff2 <- extra2 - extra1 #reverse the order of subtraction!
+t.test(diff2)
+
+mean(mysleep$diff)
+sd(mysleep$diff)
+mean(diff2)
+sd(diff2)
+
+############
+# 4/7/2021 #
+############
+
+
