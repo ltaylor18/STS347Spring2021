@@ -198,6 +198,7 @@ sleep.sorted <- arrange(sleep,ID)
 extra1 <- sleep.sorted$extra[sleep.sorted$group == 1]
 #dplyr
 extra2 <- select(filter(sleep.sorted,group==2),extra)
+extra2 <- sleep.sorted$extra[sleep.sorted$group == 2]
 
 diff <- extra1-extra2
 
@@ -227,4 +228,216 @@ sd(diff2)
 # 4/7/2021 #
 ############
 
+# Warm-up follow-up
+x <- 1:10
+y <- seq(10,100,10)
+z <- rep("R Rules",10)
 
+mydata <- data.frame(x,y,z)
+mydata
+
+# Forum follow-up
+# What are myx and myy?
+
+library(ggplot2)
+
+# What does Beta(3,1) distribution look like?
+# Let's generate some random data!
+mybeta <- rbeta(1000,3,1)
+ggplot(NULL) + 
+  geom_histogram(aes(x=mybeta,
+                     y=..density..),
+                 color="white")
+
+# Let's superimpose the curve in steps!
+# The graph goes from
+min(mybeta)
+# to
+max(mybeta)
+# So I need to calculate the dbeta 
+# function across this range.
+
+myx <- seq(min(mybeta),max(mybeta),0.01)
+# myx is a sequence that starts at the smallest
+# observed x value and goes up by 0.01
+# until it reaches the max x value
+head(myx) # first 6 values
+tail(myx) # last 6 values
+
+# At each x value, we need to calculate the
+# height of the Beta(3,1) density curve
+myy <- dbeta(myx,3,1)
+head(myy)
+tail(myy)
+
+# So what did we just calculate? We calculated the 
+# x and y coordinates that define the Beta density 
+# curve.
+
+ggplot(NULL) + 
+  geom_histogram(aes(x=mybeta,
+                     y=..density..),
+                 color="white") +
+  geom_point(aes(x=myx,
+                 y=myy),
+             color="red")
+
+# However, we like to see this as a smooth line.
+# So instead of using geom_point, we have R
+# connect the dots for us using geom_line.
+# That is why a finer grid of myx values create
+# a smoother line.
+
+ggplot(NULL) + 
+  geom_histogram(aes(x=mybeta,
+                     y=..density..),
+                 color="white") +
+  geom_line(aes(x=myx,
+                 y=myy),
+             color="red")
+
+# Note: There are other ways to do this, but I like
+# the connection this makes to remind us that the
+# d+distribution function calculates the height
+# of the density function.
+
+
+# Two-independent samples t-tests (continued)
+
+# Make the data file to work with!
+library(dplyr)
+library(palmerpenguins)  
+mypenguins <- select(filter(penguins,species != "Chinstrap"),
+                     species,
+                     bill_length_mm)
+
+# preview it!
+mypenguins[c(1:6,271:276),]
+
+adelie <- select(
+  filter(mypenguins,
+         species=="Adelie"),
+  bill_length_mm)
+gentoo <- select(
+  filter(mypenguins,
+         species=="Gentoo"),
+  bill_length_mm)
+
+head(adelie)
+head(gentoo)
+
+# First column of table in notes:
+
+# In SAS:
+# proc ttest data=mypenguins;
+# class species;
+# var bill_length_mm;
+# run;
+
+t.test(bill_length_mm ~ species,
+       data=mypenguins)
+
+# Equal variance
+t.test(bill_length_mm ~ species,
+       data=mypenguins,
+       var.equal=TRUE)
+
+# How might you determine whether to use
+# the equal variance or unequal variance test?
+
+# Compare the sample variances!
+summarize(filter(adelie,!is.na(bill_length_mm))
+                 ,myvar=var(bill_length_mm))
+summarize(filter(gentoo,!is.na(bill_length_mm))
+          ,myvar=var(bill_length_mm))
+
+# Draw side-by-side boxplots!
+# Perform the Equal Variance F-test!
+
+
+
+# Second column of table in notes:
+
+t.test(adelie$bill_length_mm,
+       gentoo$bill_length_mm)
+
+#What about a reversed order?
+t.test(gentoo$bill_length_mm,
+       adelie$bill_length_mm)
+
+# Equal variance
+t.test(adelie$bill_length_mm,
+       gentoo$bill_length_mm,
+       var.equal=TRUE)
+
+# Example - simulated data
+
+set.seed(6493)
+x1 <- rnorm(100,100,5)
+x2 <- rnorm(20,100,15)
+var(x1)  
+var(x2)
+t.test(x1,x2,var.equal=TRUE)
+t.test(x1,x2,var.equal=FALSE)
+val=c(x1,x2)
+grp=c(rep("A",100),rep("B",20)) 
+mydata <- data.frame(val,grp)
+ggplot(mydata,aes(x=grp,y=val)) +    
+  geom_boxplot()
+
+
+############
+# 4/9/2021 #
+############
+
+
+# Swap SDs
+set.seed(6493)
+x1 <- rnorm(100,100,15) # swapped
+x2 <- rnorm(20,100,5) # swapped
+var(x1)  
+var(x2)
+t.test(x1,x2,var.equal=TRUE)
+t.test(x1,x2,var.equal=FALSE)
+val=c(x1,x2)
+grp=c(rep("A",100),rep("B",20)) 
+mydata <- data.frame(val,grp)
+ggplot(mydata,aes(x=grp,y=val)) +    
+  geom_boxplot()
+
+# Same SD
+set.seed(6493)
+x1 <- rnorm(100,100,15) # both 15
+x2 <- rnorm(20,100,15)
+var(x1)  
+var(x2)
+t.test(x1,x2,var.equal=TRUE)
+t.test(x1,x2,var.equal=FALSE)
+val=c(x1,x2)
+grp=c(rep("A",100),rep("B",20)) 
+mydata <- data.frame(val,grp)
+ggplot(mydata,aes(x=grp,y=val)) +    
+  geom_boxplot()
+
+# Larger n
+set.seed(6493)
+x1 <- rnorm(100,100,5)
+x2 <- rnorm(100,100,15) # n2=100
+var(x1)  
+var(x2)
+t.test(x1,x2,var.equal=TRUE)
+t.test(x1,x2,var.equal=FALSE)
+val=c(x1,x2)
+grp=c(rep("A",100),rep("B",100)) # n2=100
+mydata <- data.frame(val,grp)
+ggplot(mydata,aes(x=grp,y=val)) +    
+  geom_boxplot()
+
+
+# What if we do two-independent samples t-test 
+# when data is really paired?
+
+# Note: I fixed extra2 above so that it was a vector!
+
+t.test(extra1,extra2,paired=TRUE)
+t.test(extra1,extra2)
