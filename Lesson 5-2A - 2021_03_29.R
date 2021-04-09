@@ -392,6 +392,7 @@ ggplot(mydata,aes(x=grp,y=val)) +
 
 
 # Swap SDs
+library(ggplot2)
 set.seed(6493)
 x1 <- rnorm(100,100,15) # swapped
 x2 <- rnorm(20,100,5) # swapped
@@ -426,7 +427,7 @@ x2 <- rnorm(100,100,15) # n2=100
 var(x1)  
 var(x2)
 t.test(x1,x2,var.equal=TRUE)
-t.test(x1,x2,var.equal=FALSE)
+t.test(x1,x2,var.equal=FALSE) # correct test!
 val=c(x1,x2)
 grp=c(rep("A",100),rep("B",100)) # n2=100
 mydata <- data.frame(val,grp)
@@ -439,5 +440,5 @@ ggplot(mydata,aes(x=grp,y=val)) +
 
 # Note: I fixed extra2 above so that it was a vector!
 
-t.test(extra1,extra2,paired=TRUE)
-t.test(extra1,extra2)
+t.test(extra1,extra2,paired=TRUE) #correct analysis
+t.test(extra1,extra2) #incorrect analysis
