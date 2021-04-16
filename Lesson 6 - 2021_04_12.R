@@ -138,3 +138,114 @@ case_when(pval < 0.05 ~ "Results are significant at the 0.05 level.",
           pval > 0.05 ~ "Results are not significant at the 0.05 level.",
           pval == 0.05 ~ "The p-value equals 0.05, the significance level.")
 
+###########
+# 4/16/21 #
+###########
+
+# Illustration 1
+x <- rnorm(1)
+x
+if(x > 0) {
+  statement <- paste(x, "is a positive number.", sep=" ")
+  print(statement)
+} else if (x < 0) {
+  statement <- paste(x, "is a negative number.", sep=" ")
+  print(statement)
+  abs.x <- abs(x)
+  statement2 <- paste("The absolute value is ", abs.x, sep="")
+  print(statement2)
+} else {
+  print("The value is 0!")
+}
+
+# Illustration 2
+x <- seq(-5,5,1)
+x
+if(x > 0) {
+  statement <- paste(x, "is a positive number.", sep=" ")
+  print(statement)
+} else if (x < 0) {
+  statement <- paste(x, "is a negative number.", sep=" ")
+  print(statement)
+  abs.x <- abs(x)
+  statement2 <- paste("The absolute value is ", abs.x, sep="")
+  print(statement2)
+} else {
+  print("The value is 0!")
+}
+
+library(dplyr)
+x <- seq(-5,5,1)
+x
+case_when(x > 0 ~ paste(x, 
+                        " is a positive number.", 
+                        sep=""),
+          x < 0 ~ paste(x, 
+                        " is a negative number. The absolute value is ", 
+                        abs(x), 
+                        sep=""),
+          x == 0 ~ paste("The value is 0!")
+)
+
+#What is the function abs?
+?abs
+
+#How can we add an "else" to case_when?
+#This is why we added the x to our table in the notes!
+case_when(x > 0 ~ paste(x, 
+                        " is a positive number.", 
+                        sep=""),
+          x < 0 ~ paste(x, 
+                        " is a negative number. The absolute value is ", 
+                        abs(x), 
+                        sep=""),
+          TRUE ~ paste("The value is 0!") #creates an else condition
+)
+
+
+# Example 1
+
+w <- rnorm(30)
+t <- (mean(w)-0)/(sd(w)/sqrt(30))
+t
+
+# Method 2
+
+if(t >= 0){pt(t,29,lower.tail=FALSE)
+} else {pt(t,29)}
+
+# Method 4
+
+if_else(t >=0, 
+        pt(t,29,lower.tail=FALSE), 
+        pt(t,29))
+
+
+# Example 2
+
+w <- rnorm(30)
+t <- (mean(w)-0)/(sd(w)/sqrt(30))
+
+# Method 3
+if(t > 0) {
+  pt(t,29,lower.tail=FALSE)
+} else if(t < 0){
+  pt(t,29)
+} else {
+  1
+}
+
+# Method 5
+case_when(t > 0 ~ pt(t,29,lower.tail=FALSE),
+          t < 0 ~ pt(t,29),
+          t == 0 ~ 1)
+
+
+# Next example
+average <- 77
+if(average >= 90 &  average <=  100) {grade <- "A"}
+if(average >=  80 &  average <  90){grade <- "B"}
+if(average >=  70  & average  < 80){grade <- "C"}
+if(average >=  60 &  average  < 70){grade <- "D"}
+if(average  < 60){grade <- "F"}
+grade
