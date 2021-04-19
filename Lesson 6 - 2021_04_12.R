@@ -249,3 +249,110 @@ if(average >=  70  & average  < 80){grade <- "C"}
 if(average >=  60 &  average  < 70){grade <- "D"}
 if(average  < 60){grade <- "F"}
 grade
+
+###########
+# 4/19/21 #
+###########
+
+#average <- 77
+#average <- 87
+#average <- 70
+#average <- 103
+#average <- -95
+average <- c(87, 70, 100, 95) 
+if(average >= 90 &  average <=  100) {grade <- "A"}
+if(average >=  80 &  average <  90){grade <- "B"}
+if(average >=  70  & average  < 80){grade <- "C"}
+if(average >=  60 &  average  < 70){grade <- "D"}
+if(average  < 60){grade <- "F"}
+grade
+
+#Some suggestions from the class:
+# 1. Put a lower bound on the average for the F grades
+# 2. Use absolute value!
+
+
+average <- c(80,87,70,103,-95)
+library(dplyr)
+grade <- case_when(average >= 90 & average <= 100 ~ "A",
+                   average >= 80 & average < 90 ~ "B",
+                   average >= 70 & average < 80 ~ "C",
+                   average >= 60 & average < 70 ~ "D",
+                   average >= 0 & average < 60 ~ "F",
+                   TRUE ~ "ERROR")
+grade
+
+data.frame(average,grade)
+
+# Next example!
+grade <- NULL
+average <- 91 # Try values of 95 and 91 and 85
+if(average >=  90  & average <=  100) {grade <- "A"
+} else if(average  >= 90  & average <=  93){grade <- "A-"
+} else {grade <- "ERROR"
+}
+grade
+
+
+
+grade <- NULL
+average <- 91 # Try values of 95 and 91 and 85
+if(average >=  90  & average <=  100) {grade <- "A"} 
+grade
+if(average  >= 90  & average <=  93){grade <- "A-"} 
+grade
+if(average > 100 | average < 90) {grade <- "ERROR"}
+grade
+
+
+# How does computing time compare!
+# We should see the else if coding is faster,
+# in general, then if statements.
+
+start <- proc.time()
+average <- 77
+if(average >= 90 & average <= 100) {grade <- "A"}
+if(average >= 80 & average < 90){grade <- "B"}
+if(average >= 70 & average < 80){grade <- "C"}
+if(average >= 60 & average < 70){grade <- "D"}
+if(average < 60 & average >= 0){grade <- "F"}
+if(average < 0 | average > 100){grade <- "Error"}
+grade
+ifonlyoutcome <- proc.time() - start
+
+start <- proc.time()
+average2 <- 77
+if(average2 >= 90 & average2 <= 100) {grade2 <- "A"
+} else if(average2 >= 80){grade2 <- "B"
+} else if(average2 >= 70 ){grade2 <- "C"
+} else if(average2 >= 60 ){grade2 <- "D"
+} else if(average2 < 60 & average2 >= 0){grade2 <- "F"
+} else {grade2 <- "Error"}
+grade2
+ifelseifoutcome <- proc.time() - start
+
+ifelseifoutcome
+ifonlyoutcome
+
+
+###############
+#### FOR ######
+###############
+
+mydata <- matrix(rnorm(3000),nrow=1000)
+dim(mydata)
+head(mydata)
+mymeans <- apply(mydata,1,mean)
+mymeans[1:6]
+
+
+mymeans <- replicate(1000,mean(rnorm(30)))
+mymeans[1:6]
+
+
+#Example 1
+for(i in 1:5) {  print(i)  }
+
+#Example 2
+for(index in seq(0,10,2)) {print(index)}
+
