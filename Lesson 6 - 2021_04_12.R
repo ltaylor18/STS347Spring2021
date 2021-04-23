@@ -356,3 +356,56 @@ for(i in 1:5) {  print(i)  }
 #Example 2
 for(index in seq(0,10,2)) {print(index)}
 
+###########
+# 4/23/21 #
+###########
+
+#Example 3 
+for(j in c(1,12,50)){
+  print(j)
+  print(2*j)
+}
+
+
+#Example 4A
+sum <- 0
+for(k in 1:10){
+  sum <- sum + k
+}
+sum
+
+
+#Example 4B
+rm(sum)
+for(k in 1:10){
+  sum <- sum + k
+}
+sum
+
+
+#Example 4C
+sum <- 0
+for(k in 1:10){
+  sum <- sum + k
+}
+
+
+#Example 5
+sum <- 1
+for(k in 2:10){
+  sum[k] <- sum[k-1] + k
+}
+sum
+
+
+#Example 6
+m <- NULL
+mymat <- matrix(1:30,nrow=5,ncol=6,byrow=TRUE)
+for(i in 1:length(mymat[1,])){
+  m[i] <- mean(mymat[,i])
+}
+
+
+#Example 7
+mysequence <- seq(100,2,-2)
+for(i in mysequence){print(i/2)}
