@@ -409,3 +409,83 @@ for(i in 1:length(mymat[1,])){
 #Example 7
 mysequence <- seq(100,2,-2)
 for(i in mysequence){print(i/2)}
+
+
+###########
+# 4/28/21 #
+###########
+
+m <- NULL
+mymat <- matrix(1:30,nrow=5,ncol=6,byrow=TRUE)
+for(i in 1:length(mymat[1,])){
+  m[i] <- mean(mymat[,i])
+}
+m # To see what m looks like
+
+apply(mymat,2,mean) # does the same thing as lines 420-422
+
+#Example 7
+mysequence <- seq(100,2,-2)
+for(i in mysequence){print(i/2)}
+
+# We can model our solution after 4A
+sum <- 0
+for(k in 1:10){
+  sum <- sum + k*k #changed to k*k
+  #sum #try print(sum)
+  print(sum)
+}
+
+sum <- 0
+for(k in seq(10,100,10)){
+  sum <- sum + (k/10)*(k/10) #changed to k*k
+  #sum #try print(sum)
+  print(sum)
+}
+
+
+
+#Notes 6 - Activity
+#1.
+set.seed(2320)
+
+#2.
+mydata <- rnorm(1000*30)
+activitymat <- matrix(mydata,nrow=1000,ncol=30)
+
+#3.
+# True mean (mu) is 0, and true sd (sigma) is 1
+
+#4.
+out <- t.test(activitymat[1,],
+              alternative="two.sided",
+              mu=0)
+
+out
+mypvals <- out$p.value
+mypvals
+
+#7.
+set.seed(2320)
+mydata <- rnorm(1000*30)
+activitymat <- matrix(mydata,nrow=1000,ncol=30)
+out <- NULL
+mypvals <- NULL
+
+# We left off here. What changes do we need to make to our
+# original R expressions placed between the { } to complete
+# this task.
+for(k in 1:1000){
+  out <- t.test(activitymat[1,],
+                alternative="two.sided",
+                mu=0)
+  
+  mypvals <- out$p.value
+}
+
+
+###########
+# 4/30/21 #
+###########
+
+
