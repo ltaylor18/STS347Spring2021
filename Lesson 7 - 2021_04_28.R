@@ -136,3 +136,97 @@ mylist
 mylist2 <- list(myseq=x,mymat=m,mydata=sleep)
 mylist2
 
+
+##############
+## 5/5/21   ##
+##############
+
+x <- 1:5
+m <- matrix(1:25,nrow=5)
+mylist <- list(x,m,sleep)
+mylist
+mylist[[1]]
+mylist[1]
+mylist[[1]][3] #prints out the third element of the 1st object in mylist
+names(mylist)
+mylist2 <- list(myseq=x,mymat=m,mydata=sleep)
+mylist2
+mylist2$myseq
+mylist2$myseq[3]
+names(mylist2)
+
+
+MyTrim <- function(datavar){
+  xmax <- max(datavar)
+  xmin <- min(datavar)
+  S <- sum(datavar) - xmax - xmin
+  L <- length(datavar) - 2
+  M <- S/L
+  M
+  output <- list(mymax=xmax,mymin=xmin,S=S, L=L, M=M)
+  return(output)
+}
+
+mydata <- rnorm(100)
+
+MyTrim(mydata)
+out <- MyTrim(mydata)
+out$mymax
+out$M
+
+
+out <- MyTrim(mtcars$mpg)
+out
+
+mymax <- out$mymax
+
+
+# For you to try solutions:
+#a.a.
+myvec <- 1:5
+#a.b.
+mysum <- sum(myvec)
+#b.
+MySum <- function(value)
+{
+  myvec <- 1:value
+  mysum <- sum(myvec)
+  mysum
+}
+#c.
+MySum(2)
+MySum(5)
+MySum(100)
+
+
+#Exercise #2
+TwoDice <- function(N){
+  mysums <- replicate(N,sum(sample(1:6,2,replace=TRUE)))
+  mysums
+}
+
+TwoDice(10)
+out <- TwoDice(10)
+sum(out==7)/10
+table(out)
+hist(out,freq=TRUE,breaks=1:12)  #you only need $mysum if you returned a list
+
+library(ggplot2)
+ggplot(NULL,aes(x=out)) + geom_histogram(color="white")
+
+nsims <- 5000
+TwoDice(nsims)
+out <- TwoDice(nsims)
+sum(out==7)/nsims
+table(out)
+hist(out,freq=TRUE,breaks=1:12)  #you only need $mysum if you returned a list
+ggplot(NULL,aes(x=out)) + geom_histogram(color="white")
+#7 is the most likely sum of two dice!
+
+TwoDice2 <- function(N){
+  mysums <- replicate(N,sum(sample(1:6,2,replace=TRUE)))
+  hist(out,freq=TRUE,breaks=1:12)
+  mysums
+}
+
+TwoDice2(nsims)
